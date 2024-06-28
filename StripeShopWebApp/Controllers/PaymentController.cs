@@ -1,13 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
+using StripeShopWebApp.Data;
 
 namespace StripeShopWebApp.Controllers
 {
     public class PaymentController : Controller
     {
-        public IActionResult Index()
+        // Injecting Data into Controller using context constructor
+        private readonly ProductContext _productContext;
+        public PaymentController(ProductContext productContext)
         {
-            return View();
+            _productContext = productContext;
+        }
+
+        public async Task<IActionResult> Index(string searchMenu)
+        {
+            var products = _productContext.Products;
+
+            if (!string.IsNullOrEmpty(searchMenu))
+            {
+                return View(await products.Where(c => c.Name.Contains(searchMenu)).ToListAsync());
+            }
+            return View(products);
         }
 
         [HttpPost]
