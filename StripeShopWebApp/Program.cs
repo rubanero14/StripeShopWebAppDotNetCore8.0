@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using Stripe;
+using StripeShopWebApp.Data;
+
+// src:https://www.youtube.com/watch?v=6SAFgcMie4U&t=1230s&ab_channel=freeCodeCamp.org
 
 var builder = WebApplication.CreateBuilder(args);
 
-// src:https://www.youtube.com/watch?v=6SAFgcMie4U&t=1230s&ab_channel=freeCodeCamp.org
+// Add DB Connection string
+builder.Services.AddDbContext<ProductContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
