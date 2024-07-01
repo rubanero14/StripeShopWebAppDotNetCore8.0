@@ -19,12 +19,12 @@
             @foreach (var item in Model)
             {
                 <div class="col-3">
-                    <div class="card row text-center text-secondary me-2 mb-2">
-                        <div class="col-12">
-                            <img src="@item.ImageUrl" alt=$"{@item.Name} Picture" class="w-100" style="height:200px;" />
+                    <div class="card row text-center bg-secondary text-light me-2 mb-2">
+                        <div class="col-12 px-0">
+                            <img src="@item.ImageUrl" alt=$"{@item.Name} Picture" class="w-100" style="height:200px; border-radius: 0.25rem 0.25rem 0 0;" />
                         </div>
                         <div class="col-12">
-                            <p>@item.Name</p>
+                            <p class="my-2">@item.Name</p>
                         </div>
                         <hr />
                         <div class="col-12" style="height:150px;">
@@ -33,7 +33,8 @@
                         <div class="col-12 p-0 pt-0">
                             <form asp-action="Checkout" method="POST">
                                 <input type="hidden" name="Id" value="@item.Id"/>
-                                <button class="btn btn-outline-secondary w-100" type="submit" id="checkout-button">Checkout</button>
+                                <input type="hidden" name="PriceId" value="@item.PriceId" />
+                                <button class="btn btn-dark w-100" type="submit" id="checkout-button">Checkout</button>
                             </form>
                         </div>
                     </div>
