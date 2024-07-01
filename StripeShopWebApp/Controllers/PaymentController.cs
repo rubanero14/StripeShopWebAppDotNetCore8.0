@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
 using StripeShopWebApp.Data;
+using StripeShopWebApp.Models;
 
 namespace StripeShopWebApp.Controllers
 {
@@ -26,7 +27,7 @@ namespace StripeShopWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout()
+        public ActionResult Checkout([Bind("Id, Name, PriceId, ImageUrl, Description")] Product product) //Passing product item as params for checkout purpose
         {
             var domain = "https://localhost:7271";
             var options = new SessionCreateOptions
@@ -36,7 +37,7 @@ namespace StripeShopWebApp.Controllers
                   new SessionLineItemOptions
                   {
                     // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    Price = "price_1PWDOgP9UQlxna3s6Yi0JJyu",
+                    Price = $"{product.PriceId}",
                     Quantity = 1,
                   },
                 },
